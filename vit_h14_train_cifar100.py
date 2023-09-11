@@ -117,7 +117,7 @@ grad_norm_clip = 1
 # a TPU runtime that has 8 devices. 64 should work on a GPU. You can of course
 # also adjust the batch_size above, but that would require you to adjust the
 # learning rate accordingly.
-accum_steps = 64
+accum_steps = 8
 base_lr = 0.03
 
 # Check out train.make_update_fn in the editor on the right side for details.
