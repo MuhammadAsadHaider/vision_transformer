@@ -112,7 +112,7 @@ acc = get_accuracy(params_repl)
 print(f'Initial accuracy: {acc:.2%}')
 
 # 100 Steps take approximately 15 minutes in the TPU runtime.
-total_steps = 500
+total_steps = 2000
 warmup_steps = 5
 decay_type = 'cosine'
 grad_norm_clip = 1
