@@ -54,11 +54,14 @@ def get_accuracy(params_repl):
   """Returns accuracy evaluated on the test set."""
   good = total = 0
   steps = input_pipeline.get_dataset_info(dataset, 'test')['num_examples'] // batch_size
+  print(steps)
   for _, batch in zip(tqdm.trange(steps), ds_test.as_numpy_iterator()):
     predicted = vit_apply_repl(params_repl, batch['image'])
+    print(predicted.shape)
     is_same = predicted.argmax(axis=-1) == batch['label'].argmax(axis=-1)
     good += is_same.sum()
     total += len(is_same.flatten())
+  print(total)
   return good / total
 
 model_name = "ViT-H_14"
@@ -109,7 +112,7 @@ acc = get_accuracy(params_repl)
 print(f'Initial accuracy: {acc:.2%}')
 
 # 100 Steps take approximately 15 minutes in the TPU runtime.
-total_steps = 100
+total_steps = 500
 warmup_steps = 5
 decay_type = 'cosine'
 grad_norm_clip = 1
