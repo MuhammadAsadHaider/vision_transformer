@@ -65,7 +65,7 @@ model_name = "ViT-H_14"
 assert os.path.exists(f'{model_name}.npz')
 
 dataset = 'cifar10'
-batch_size = 512
+batch_size = 32
 config = common_config.with_dataset(common_config.get_config(), dataset)
 config.batch = batch_size
 config.pp.crop = 224
