@@ -59,6 +59,7 @@ def get_accuracy(params_repl):
     is_same = predicted.argmax(axis=-1) == batch['label'].argmax(axis=-1)
     good += is_same.sum()
     total += len(is_same.flatten())
+  print(total)
   return good / total
 
 model_name = "ViT-H_14"
@@ -73,6 +74,8 @@ config.pp.crop = 224
 # For details about setting up datasets, see input_pipeline.py on the right.
 ds_train = input_pipeline.get_data_from_tfds(config=config, mode='train')
 ds_test = input_pipeline.get_data_from_tfds(config=config, mode='test')
+# print length of dataset
+print('ds_test:', len(ds_test))
 num_classes = input_pipeline.get_dataset_info(dataset, 'train')['num_classes']
 del config  # Only needed to instantiate datasets.
 
@@ -109,7 +112,7 @@ vit_apply_repl = jax.pmap(lambda params, inputs: model.apply(
 # print(f'Initial accuracy: {acc:.2%}')
 
 # 100 Steps take approximately 15 minutes in the TPU runtime.
-total_steps = 100
+total_steps = 2000
 warmup_steps = 5
 decay_type = 'cosine'
 grad_norm_clip = 1
