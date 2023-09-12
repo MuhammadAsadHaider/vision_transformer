@@ -112,8 +112,8 @@ vit_apply_repl = jax.pmap(lambda params, inputs: model.apply(
 # print(f'Initial accuracy: {acc:.2%}')
 
 # 100 Steps take approximately 15 minutes in the TPU runtime.
-total_steps = 2
-warmup_steps = 1
+total_steps = 10000
+warmup_steps = 500
 decay_type = 'cosine'
 grad_norm_clip = 1
 # This controls in how many forward passes the batch is split. 8 works well with
@@ -167,4 +167,4 @@ print(f'Accuracy after fine-tuning: {acc:.2%}')
 # save model
 # flax.jax_utils.unreplicate(params_repl)
 # flax.jax_utils.unreplicate(opt_state_repl)
-checkpoint.save_params(params_repl, 'vit_h14_cifar10.npz')
+# checkpoint.save_params(params_repl, 'vit_h14_cifar10.npz')
