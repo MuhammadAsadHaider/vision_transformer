@@ -286,3 +286,16 @@ def get_augreg_df(directory='gs://vit_models/augreg'):
   """
   with gfile.GFile(f'{directory}/index.csv') as f:
     return pd.read_csv(f)
+
+def save_params(params, path):
+  """Saves params to a checkpoint.
+
+  Args:
+    params: Parameters to be stored.
+    path: Path to store the checkpoint. Must be writable by `tf.io.gfile`.
+  """
+  params = flax.core.freeze(params)
+  params_flat = flax.traverse_util.flatten_dict(params)
+  keys, values = zip(*list(params_flat.items()))
+  with gfile.GFile(path, 'wb') as f:
+    np.savez(f, **dict(zip(keys, values)))
