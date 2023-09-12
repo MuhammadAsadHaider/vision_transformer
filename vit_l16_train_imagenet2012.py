@@ -64,7 +64,7 @@ def get_accuracy(params_repl):
   print(total)
   return good / total
 
-model_name = "ViT-H_14"
+model_name = "ViT-L_16"
 assert os.path.exists(f'{model_name}.npz')
 
 dataset = 'imagenet2012'
@@ -158,7 +158,7 @@ for step, batch in zip(
 
 plt.plot(losses)
 plt.title('Losses')
-plt.savefig('losses_h14_imagenet2012.png')
+plt.savefig('losses_l16_imagenet2012.png')
 
 # accuracy after fine-tuning
 acc = get_accuracy(params_repl)

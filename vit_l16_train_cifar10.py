@@ -158,7 +158,7 @@ for step, batch in zip(
 
 plt.plot(losses)
 plt.title('Losses')
-plt.savefig('losses_h14_cifar10.png')
+plt.savefig('losses_l16_cifar10.png')
 
 # accuracy after fine-tuning
 acc = get_accuracy(params_repl)
