@@ -297,5 +297,6 @@ def save_params(params, path):
   params = flax.core.freeze(params)
   params_flat = flax.traverse_util.flatten_dict(params)
   keys, values = zip(*list(params_flat.items()))
+  print(keys)
   with gfile.GFile(path, 'wb') as f:
     np.savez(f, **dict(zip(keys, values)))
