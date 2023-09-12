@@ -112,7 +112,7 @@ vit_apply_repl = jax.pmap(lambda params, inputs: model.apply(
 # print(f'Initial accuracy: {acc:.2%}')
 
 # 100 Steps take approximately 15 minutes in the TPU runtime.
-total_steps = 1
+total_steps = 2
 warmup_steps = 1
 decay_type = 'cosine'
 grad_norm_clip = 1
