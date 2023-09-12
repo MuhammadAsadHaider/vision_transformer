@@ -62,7 +62,7 @@ def get_accuracy(params_repl):
   print(total)
   return good / total
 
-model_name = "ViT-H_14"
+model_name = "ViT-L_16"
 assert os.path.exists(f'{model_name}.npz')
 
 dataset = 'cifar10'

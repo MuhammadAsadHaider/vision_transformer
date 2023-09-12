@@ -54,18 +54,20 @@ def get_accuracy(params_repl):
   """Returns accuracy evaluated on the test set."""
   good = total = 0
   steps = input_pipeline.get_dataset_info(dataset, 'test')['num_examples'] // batch_size
+  print(steps)
   for _, batch in zip(tqdm.trange(steps), ds_test.as_numpy_iterator()):
     predicted = vit_apply_repl(params_repl, batch['image'])
+    print(predicted.shape)
     is_same = predicted.argmax(axis=-1) == batch['label'].argmax(axis=-1)
     good += is_same.sum()
     total += len(is_same.flatten())
   print(total)
   return good / total
 
-model_name = "ViT-H_14"
+model_name = "ViT-L_16"
 assert os.path.exists(f'{model_name}.npz')
 
-dataset = 'cifar10'
+dataset = 'oxford_iiit_pet'
 batch_size = 32
 config = common_config.with_dataset(common_config.get_config(), dataset)
 config.batch = batch_size
@@ -74,8 +76,6 @@ config.pp.crop = 224
 # For details about setting up datasets, see input_pipeline.py on the right.
 ds_train = input_pipeline.get_data_from_tfds(config=config, mode='train')
 ds_test = input_pipeline.get_data_from_tfds(config=config, mode='test')
-# print length of dataset
-print('ds_test:', len(ds_test))
 num_classes = input_pipeline.get_dataset_info(dataset, 'train')['num_classes']
 del config  # Only needed to instantiate datasets.
 
@@ -107,7 +107,7 @@ print('params_repl.cls:', type(params_repl['head']['bias']).__name__,
 vit_apply_repl = jax.pmap(lambda params, inputs: model.apply(
     dict(params=params), inputs, train=False))
 
-#Random performance without fine-tuning.
+# Random performance without fine-tuning.
 acc = get_accuracy(params_repl)
 print(f'Initial accuracy: {acc:.2%}')
 
@@ -158,13 +158,8 @@ for step, batch in zip(
 
 plt.plot(losses)
 plt.title('Losses')
-plt.savefig('losses_h14_cifar10.png')
+plt.savefig('losses_l16_ox_pet.png')
 
 # accuracy after fine-tuning
 acc = get_accuracy(params_repl)
 print(f'Accuracy after fine-tuning: {acc:.2%}')
-
-# save model
-# flax.jax_utils.unreplicate(params_repl)
-# flax.jax_utils.unreplicate(opt_state_repl)
-# checkpoint.save_params(params_repl, 'vit_h14_cifar10.npz')
