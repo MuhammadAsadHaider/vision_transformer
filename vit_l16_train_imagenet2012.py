@@ -53,7 +53,7 @@ def show_img_grid(imgs, titles):
 def get_accuracy(params_repl):
   """Returns accuracy evaluated on the test set."""
   good = total = 0
-  steps = input_pipeline.get_dataset_info(dataset, 'test')['num_examples'] // batch_size
+  steps = input_pipeline.get_dataset_info(dataset, 'validation')['num_examples'] // batch_size
   print(steps)
   for _, batch in zip(tqdm.trange(steps), ds_test.as_numpy_iterator()):
     predicted = vit_apply_repl(params_repl, batch['image'])
