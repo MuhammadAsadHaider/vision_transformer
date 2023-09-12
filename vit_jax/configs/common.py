@@ -104,6 +104,20 @@ DATASET_PRESETS = {
               'test': 'validation',
               'crop': 384})
          }),
+    'oxford_iiit_pet': ml_collections.ConfigDict(
+        {'total_steps': 20_000,
+          'pp': ml_collections.ConfigDict(
+              {'train': 'train[:99%]',
+                'test': 'test',
+                'crop': 384})
+          }),
+    'oxford_flowers102': ml_collections.ConfigDict(
+        {'total_steps': 20_000,
+          'pp': ml_collections.ConfigDict(
+              {'train': 'train[:99%]',
+                'test': 'test',
+                'crop': 384})
+          }),
 }
 
 
